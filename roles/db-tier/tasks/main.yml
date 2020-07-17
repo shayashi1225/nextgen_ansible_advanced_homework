@@ -1,0 +1,44 @@
+---
+# tasks file for deploy-db
+
+- name: install postgres
+  yum:
+    name: postgresql-server
+    state: latest
+
+- name: enable postgres at boot
+  service:
+    name: postgresql
+    enabled: yes
+
+#- name: tell user to finish setting up postgres
+#  debug:
+#    msg: "Either uncomment the postgres setup or manually login and initialize"
+
+# only run the next 2 tasks once!
+#- name: initilize postgres
+#  command: "postgresql-setup initdb"
+#
+#- name: initilize postgres some more
+#    command: chkconfig postgresql on
+
+- name: Check if PostgreSQL database is initialized.
+  stat:
+    path: "{{ pgs_data_dir }}/PG_VERSION"
+  register: pgdata_dir_version
+
+- name: Debug pgdata_dir_version
+  debug:
+    msg: "{{ pgdata_dir_version }}"
+    verbosity: 2
+
+- name: Ensure PostgreSQL database is initialized.
+  command: "postgresql-setup/initdb"
+  when: not pgdata_dir_version.stat.exists
+  become: yes
+  become_user: "{{ postgresql_user }}"
+
+- name: start postgres
+  service:
+    name: postgresql.service
+    state: started
