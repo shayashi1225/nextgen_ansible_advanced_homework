@@ -3,8 +3,10 @@
   roles:
   - name: osp-facts
 
-# Setup front-end load balancer tier
+- name: Import In-memory inventory play
+  import_playbook: in-memory-inventory.yml
 
+# Setup front-end load balancer tier
 
 - name: setup load-balancer tier
   hosts: frontends
