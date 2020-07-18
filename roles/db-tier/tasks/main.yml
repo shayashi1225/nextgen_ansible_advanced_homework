@@ -33,7 +33,7 @@
     verbosity: 2
 
 - name: Ensure PostgreSQL database is initialized.
-  command: "postgresql-setup/initdb"
+  command: "initdb"
   when: not pgdata_dir_version.stat.exists
   become: yes
   become_user: "{{ postgresql_user }}"
