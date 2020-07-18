@@ -2,9 +2,7 @@
   gather_facts: true
   roles:
   - name: osp-facts
-
-- name: Import In-memory inventory play
-  import_playbook: in-memory-inventory.yml
+    when: not isProd
 
 # Setup front-end load balancer tier
 
