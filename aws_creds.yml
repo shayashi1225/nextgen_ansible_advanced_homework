@@ -54,5 +54,12 @@
       job_type: run
       playbook: site-smoketest-aws.yml
       project: "00_Homework Assignment"
+  
+  - name: Update Inventory
+    cmd: "tower-cli group associate --group=tag_AnsibleGroup_frontends --parent=frontends -u admin -p r3dh4t1! -h tower1.{{tower_guid}}.example.opentlc.com --insecure"
 
-    
+  - name: Update Inventory
+    cmd: "tower-cli group associate --group=tag_AnsibleGroup_apps  --parent=apps -u admin -p r3dh4t1! -h tower1.{{tower_guid}}.example.opentlc.com --insecure"
+
+  - name: Update Inventory
+    cmd: "tower-cli group associate --group=tag_AnsibleGroup_appdbs --parent=appdbs -u admin -p r3dh4t1! -h tower1.{{tower_guid}}.example.opentlc.com --insecure"
